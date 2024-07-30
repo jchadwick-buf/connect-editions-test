@@ -1,0 +1,12 @@
+version: v2
+plugins:
+  - remote: buf.build/protocolbuffers/go
+    out: gen/go
+    opt: paths=source_relative
+  - local: ../connect-go/protoc-gen-connect-go
+    out: gen/go
+    opt: paths=source_relative
+  - remote: buf.build/protocolbuffers/java
+    out: app/src/main/java
+  - local: ../connect-kotlin/protoc-gen-connect-kotlin/build/install/protoc-gen-connect-kotlin/bin/protoc-gen-connect-kotlin
+    out: app/src/main/java

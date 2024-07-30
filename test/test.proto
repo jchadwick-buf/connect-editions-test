@@ -1,0 +1,24 @@
+edition = "2023";
+
+package test;
+
+option features.field_presence = IMPLICIT;
+option features.message_encoding = DELIMITED;
+option go_package = "github.com/jchadwick-buf/connect-editions-test/gen/go/test;test";
+
+message ExampleMessage {
+  string not_utf8 = 1 [ features.utf8_validation = NONE ];
+  repeated bool flags = 2 [ features.repeated_field_encoding = EXPANDED ];
+  ExampleMessage child = 3 [ features.message_encoding = DELIMITED ];
+  ExampleEnum enum = 4 [ features.field_presence = EXPLICIT ];
+}
+
+enum ExampleEnum {
+  option features.enum_type = CLOSED;
+  VALUE_IN = 1;
+  VALUE_OUT = 2;
+}
+
+service ExampleService {
+  rpc ExampleCall(ExampleMessage) returns (ExampleMessage);
+}
